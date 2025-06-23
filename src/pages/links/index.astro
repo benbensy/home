@@ -1,0 +1,50 @@
+---
+import { getCollection } from "astro:content";
+import Main from "@/layouts/Main.astro";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import { SITE } from "@/config";
+
+const links = await getCollection("links");
+
+---
+
+<Layout title={`Links | ${SITE.title}`}>
+  <Header />
+  <Main pageTitle="Links" pageDesc="A collection of interesting websites and blogs">
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {links.map((link) => (
+        <a
+          href={link.data.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group flex flex-col rounded-lg border border-gray-200 p-4 transition-all hover:border-accent hover:shadow-md dark:border-gray-700"
+        >
+          <div class="flex items-center gap-3">
+            {link.data.logo && (
+              <img
+                src={link.data.logo}
+                alt={`${link.data.title} logo`}
+                class="h-8 w-8 rounded"
+                loading="lazy"
+                width={32}
+                height={32}
+              />
+            )}
+            <h3 class="text-lg font-medium text-accent group-hover:underline">
+              {link.data.title}
+            </h3>
+          </div>
+          <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">
+            {link.data.description}
+          </p>
+          <div class="mt-2 text-xs text-gray-500 dark:text-gray-400">
+            {new URL(link.data.url).hostname}
+          </div>
+        </a>
+      ))}
+    </div>
+  </Main>
+  <Footer />
+</Layout>

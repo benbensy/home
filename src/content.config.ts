@@ -1,8 +1,9 @@
 import { defineCollection, z } from "astro:content";
-import { glob } from "astro/loaders";
+import { file, glob } from "astro/loaders";
 import { SITE } from "@/config";
 
 export const BLOG_PATH = "src/data/blog";
+export const LINKS_PATH = "src/data/links/links.json";
 
 const blog = defineCollection({
   loader: glob({ pattern: "**/[^_]*.md", base: `./${BLOG_PATH}` }),
@@ -23,4 +24,15 @@ const blog = defineCollection({
     }),
 });
 
-export const collections = { blog };
+const links = defineCollection({
+  loader: file(LINKS_PATH),
+  schema: z.object({
+    title: z.string(),
+    url: z.string(),
+    description: z.string(),
+    logo: z.string().optional(),
+  }),
+})
+
+
+export const collections = { blog, links };
