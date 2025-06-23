@@ -12,7 +12,7 @@ const links = await getCollection("links");
 
 <Layout title={`Links | ${SITE.title}`}>
   <Header />
-  <Main pageTitle="Links" pageDesc="A collection of interesting websites and blogs">
+  <Main pageTitle="Links" pageDesc="A collection of interesting websites and blogs.">
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {links.map((link) => (
         <a
